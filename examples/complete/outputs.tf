@@ -19,6 +19,6 @@ output "vpn_endpoint_status" {
 }
 
 output "vpn_config_path" {
-	description = "Path to downloaded VPN config file"
-	value = module.vpn.vpn_config_path
+  description = "Path to downloaded VPN config file"
+  value = module.vpn.vpn_config_path
 }
