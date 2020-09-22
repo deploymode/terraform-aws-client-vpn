@@ -1,14 +1,24 @@
-output "id" {
-  description = "ID of the created example"
-  value       = module.example.id
+output "vpn_endpoint_id" {
+  description = "The ID of the Client VPN endpoint."
+  value       = module.vpn.id
 }
 
-output "example" {
-  description = "Output \"example\" from example module"
-  value       = module.example.example
+output "vpn_endpoint_arn" {
+  description = "The ARN of the Client VPN endpoint."
+  value       = module.vpn.arn
 }
 
-output "random" {
-  description = "Output \"random\" from example module"
-  value       = module.example.random
+output "vpn_endpoint_dns_name" {
+  description = "The DNS name to be used by clients when establishing their VPN session."
+  value       = module.vpn.dns_name
+}
+
+output "vpn_endpoint_status" {
+  description = "The current state of the Client VPN endpoint."
+  value       = module.vpn.status
+}
+
+output "vpn_config_path" {
+	description = "Path to downloaded VPN config file"
+	value = module.vpn.vpn_config_path
 }

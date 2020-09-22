@@ -1,6 +1,6 @@
 namespace = "eg"
 
-environment = "ue2"
+environment = "aps2"
 
 stage = "test"
 
@@ -13,7 +13,7 @@ cert_dir = "../../certs"
 config_dir = "../../config"
 
 availability_zones = [
-  "us-east-2a"
+  "ap-southeast-2a"
 ]
 
 vpc_cidr = "172.16.0.0/16"

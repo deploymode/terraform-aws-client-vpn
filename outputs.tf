@@ -1,14 +1,24 @@
 output "id" {
-  description = "ID of the created example"
-  value       = module.this.enabled ? module.this.id : null
+  description = "The ID of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.default.id
 }
 
-output "example" {
-  description = "Example output"
-  value       = module.this.enabled ? local.example : null
+output "arn" {
+  description = "The ARN of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.default.arn
 }
 
-output "random" {
-  description = "Stable random number for this example"
-  value       = module.this.enabled ? join("", random_integer.example[*].result) : null
+output "dns_name" {
+  description = "The DNS name to be used by clients when establishing their VPN session."
+  value       = aws_ec2_client_vpn_endpoint.default.dns_name
+}
+
+output "status" {
+  description = "The current state of the Client VPN endpoint."
+  value       = aws_ec2_client_vpn_endpoint.default.status
+}
+
+output "vpn_config_path" {
+	description = "Path to downloaded VPN config file"
+	value = local.vpn_config_path
 }

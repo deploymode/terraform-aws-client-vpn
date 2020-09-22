@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-example-module
+name: terraform-aws-client-vpn
 
 # Logo for this project
 #logo: docs/logo.png
@@ -15,24 +15,18 @@ license: "APACHE2"
 
 # Copyrights
 copyrights:
-  - name: "Cloud Posse, LLC"
-    url: "https://cloudposse.com"
+  - name: "DeployMode Pty Ltd"
+    url: "https://www.deploymode.com/"
     year: "2020"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-example-module
+github_repo: DeployMode/terraform-aws-client-vpn
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-example-module.svg"
-    url: "https://github.com/cloudposse/terraform-example-module/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
-  - name: "Discourse Forum"
-    image: "https://img.shields.io/discourse/https/ask.sweetops.com/posts.svg"
-    url: "https://ask.sweetops.com/"
+    image: "https://img.shields.io/github/release/DeployMode/terraform-aws-client-vpn.svg"
+    url: "https://github.com/DeployMode/terraform-aws-client-vpn/releases/latest"
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
@@ -70,7 +64,7 @@ usage: |-
 
   ```hcl
   module "example" {
-    source = "https://github.com/cloudposse/terraform-example-module.git?ref=master"
+    source = "https://github.com/DeployMode/terraform-aws-client-vpn.git?ref=master"
     example = "Hello world!"
   }
   ```
@@ -78,7 +72,7 @@ usage: |-
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/cloudposse/terraform-example-module/) - complete example of using this module
+  - [`examples/complete`](https://github.com/DeployMode/terraform-aws-client-vpn/) - complete example of using this module
 
 # How to get started quickly
 #quickstart: |-
@@ -91,5 +85,5 @@ include:
 
 # Contributors to this project
 contributors:
-  - name: "Erik Osterman"
-    github: "osterman"
+  - name: "Joe Niland"
+    github: "joe-niland"
