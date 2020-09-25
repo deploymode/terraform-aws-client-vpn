@@ -19,6 +19,6 @@ output "status" {
 }
 
 output "vpn_config_path" {
-	description = "Path to downloaded VPN config file"
-	value = local.vpn_config_path
+  description = "Path to downloaded VPN config file"
+  value       = local.vpn_config_path
 }
