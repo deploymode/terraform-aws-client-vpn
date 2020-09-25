@@ -20,7 +20,7 @@ module "subnets" {
 }
 
 locals {
-  vpn_subnet_cidr = cidrsubnet(module.vpc.vpc_cidr_block, 6, 10)
+  vpn_subnet_cidr = module.vpc.vpc_cidr_block != "" ? cidrsubnet(module.vpc.vpc_cidr_block, 6, 10) : ""
 }
 
 resource aws_subnet vpn {
