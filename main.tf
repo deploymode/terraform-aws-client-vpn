@@ -3,33 +3,17 @@ locals {
 }
 
 // Certs
-
-# resource null_resource gen_certs {
-#   provisioner local-exec {
-#     working_dir = path.module
-#     interpreter = ["bash", "-c"]
-#     command = "scripts/gen-certs.sh ${var.cert_dir} ${var.cert_domain}"
-#   }
-# }
-
+// Assume scripts/gen-certs.sh has been run
 resource aws_acm_certificate client {
   private_key       = file("${path.root}/${var.cert_dir}/client1.${var.cert_domain}.key")
   certificate_body  = file("${path.root}/${var.cert_dir}/client1.${var.cert_domain}.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
-
-  # depends_on = [
-  #   null_resource.gen_certs
-  # ]
 }
 
 resource aws_acm_certificate server {
   private_key       = file("${path.root}/${var.cert_dir}/server.key")
   certificate_body  = file("${path.root}/${var.cert_dir}/server.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
-
-  # depends_on = [
-  #   null_resource.gen_certs
-  # ]
 }
 
 resource aws_cloudwatch_log_group default {
@@ -62,8 +46,7 @@ resource aws_ec2_client_vpn_endpoint default {
 }
 
 resource aws_ec2_client_vpn_network_association default {
-  for_each = toset(var.subnet_ids)
-  # for_each = {for subnet in var.subnet_ids:  subnet => subnet}
+  for_each               = toset(var.subnet_ids)
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   subnet_id              = each.key
 }

@@ -4,7 +4,7 @@ environment = "ue2"
 
 stage = "test"
 
-name = "example"
+name = "vpn"
 
 cert_domain = "example.com"
 
