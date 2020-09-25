@@ -25,8 +25,8 @@
 
 -->
 
-This is `terraform-example-module` project provides all the scaffolding for a typical well-built Cloud Posse module. It's a template repository you can
-use when creating new repositories.
+The `terraform-aws-client-vpn` module creates an AWS Client VPN Endpoint. It contains scripts to generate the required certificates and
+OpenVPN config file.
 
 
 ---
@@ -70,9 +70,18 @@ Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest re
 Here's how to invoke this example module in your projects
 
 ```hcl
-module "example" {
+module vpn {
   source = "https://github.com/DeployMode/terraform-aws-client-vpn.git?ref=master"
-  example = "Hello world!"
+
+  context = module.this.context
+
+  vpn_client_cidr               = var.vpn_client_cidr
+  cert_dir                      = var.cert_dir
+  config_dir                    = var.config_dir
+  cert_domain                   = var.cert_domain
+  subnet_ids                    = [aws_subnet.vpn.id]
+  logging_enabled               = var.logging_enabled
+  cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
 }
 ```
 
@@ -83,6 +92,11 @@ module "example" {
 
 Here is an example of using this module:
 - [`examples/complete`](https://github.com/DeployMode/terraform-aws-client-vpn/) - complete example of using this module
+  - Note: you must create subnets before creating the rest of the resources. This can be done with:
+      ```shell
+      terraform apply -var-file=fixtures.us-east-2.tfvars -target=aws_subnet.vpn
+      terraform apply -var-file=fixtures.us-east-2.tfvars
+      ```
 
 
 
