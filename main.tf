@@ -49,13 +49,14 @@ resource aws_ec2_client_vpn_network_association default {
   for_each               = toset(var.subnet_ids)
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   subnet_id              = each.key
+  security_groups        = var.security_groups
 }
 
 resource aws_ec2_client_vpn_authorization_rule ingress-all {
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   target_network_cidr    = var.allowed_ingress_network_cidr
   authorize_all_groups   = true
-  description            = "Allow all groups access to ${var.allowed_ingress_network_cidr}"
+  description            = "Allow all VPN groups access to ${var.allowed_ingress_network_cidr}"
 }
 
 data "aws_region" "current" {}

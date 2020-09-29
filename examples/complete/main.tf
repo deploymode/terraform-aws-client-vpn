@@ -32,6 +32,27 @@ resource aws_subnet vpn {
   }
 }
 
+resource aws_security_group vpn {
+  name = module.this.id
+  description = "Security group to apply to VPN's target network"
+
+  ingress {
+    description = "Allow all ingress"
+    from_port   = 0
+    to_port     = 0
+    protocol    = -1
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    description = "Allow all egress"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 // VPN
 module vpn {
   source = "../.."
@@ -43,6 +64,7 @@ module vpn {
   config_dir                    = var.config_dir
   cert_domain                   = var.cert_domain
   subnet_ids                    = [aws_subnet.vpn.id]
+  security_groups = [aws_security_group.vpn.id]
   logging_enabled               = var.logging_enabled
   cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
 }

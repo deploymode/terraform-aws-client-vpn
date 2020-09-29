@@ -16,6 +16,12 @@ variable "allowed_ingress_network_cidr" {
   default     = "0.0.0.0/0"
 }
 
+variable "security_groups" {
+  type        = list(string)
+  description = "Security groups to associate with Client VPN network association"
+  default     = null
+}
+
 // Authentication
 
 variable "cert_dir" {
