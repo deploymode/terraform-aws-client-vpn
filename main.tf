@@ -17,7 +17,7 @@ resource aws_acm_certificate server {
 }
 
 resource aws_cloudwatch_log_group default {
-  name              = format("/aws/vpn/%s/logs", module.this.name)
+  name              = format("/aws/vpn/%s/logs", module.this.id)
   retention_in_days = var.cloudwatch_log_retention_days
 }
 
