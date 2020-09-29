@@ -80,6 +80,7 @@ module vpn {
   config_dir                    = var.config_dir
   cert_domain                   = var.cert_domain
   subnet_ids                    = [aws_subnet.vpn.id]
+  security_groups               = var.security_groups
   logging_enabled               = var.logging_enabled
   cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
 }

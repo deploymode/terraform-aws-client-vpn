@@ -4,7 +4,7 @@ environment = "aps2"
 
 stage = "test"
 
-name = "example"
+name = "vpntest"
 
 cert_domain = "example.com"
 

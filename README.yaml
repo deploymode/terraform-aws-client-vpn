@@ -20,13 +20,13 @@ copyrights:
     year: "2020"
 
 # Canonical GitHub repo
-github_repo: DeployMode/terraform-aws-client-vpn
+github_repo: deploymode/terraform-aws-client-vpn
 
 # Badges to display
 badges:
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/DeployMode/terraform-aws-client-vpn.svg"
-    url: "https://github.com/DeployMode/terraform-aws-client-vpn/releases/latest"
+    image: "https://img.shields.io/github/release/deploymode/terraform-aws-client-vpn.svg"
+    url: "https://github.com/deploymode/terraform-aws-client-vpn/releases/latest"
 
 # List any related terraform modules that this module may be used with or that this module depends on.
 related:
@@ -64,7 +64,7 @@ usage: |-
 
   ```hcl
   module vpn {
-    source = "https://github.com/DeployMode/terraform-aws-client-vpn.git?ref=master"
+    source = "https://github.com/deploymode/terraform-aws-client-vpn.git?ref=master"
 
     context = module.this.context
 
@@ -73,6 +73,7 @@ usage: |-
     config_dir                    = var.config_dir
     cert_domain                   = var.cert_domain
     subnet_ids                    = [aws_subnet.vpn.id]
+    security_groups               = var.security_groups
     logging_enabled               = var.logging_enabled
     cloudwatch_log_retention_days = var.cloudwatch_log_retention_days
   }
@@ -81,7 +82,7 @@ usage: |-
 # Example usage
 examples: |-
   Here is an example of using this module:
-  - [`examples/complete`](https://github.com/DeployMode/terraform-aws-client-vpn/) - complete example of using this module
+  - [`examples/complete`](https://github.com/deploymode/terraform-aws-client-vpn/) - complete example of using this module
     - Note: you must create subnets before creating the rest of the resources. This can be done with:
         ```shell
         terraform apply -var-file=fixtures.us-east-2.tfvars -target=aws_subnet.vpn
