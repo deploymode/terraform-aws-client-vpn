@@ -15,10 +15,12 @@ echo $CONFIG_FILE_PATH
 
 [ ! -d $CERT_PATH ] && echo $CERT_PATH not found && exit 1
 
+RANDOM_STRING=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 10 | head -n 1)
+
 cp $CERT_DIR/client1.$DOMAIN.crt $CONFIG_PATH && \
 cp $CERT_DIR/client1.$DOMAIN.key $CONFIG_PATH && \
 [ -f $CONFIG_FILE_PATH ] && { 
-    sed -i "s/cvpn-endpoint/random.cvpn-endpoint/g" "$CONFIG_FILE_PATH"
+    sed -i "s/cvpn-endpoint/$RANDOM_STRING.cvpn-endpoint/g" "$CONFIG_FILE_PATH"
 } && {
     cat<<EOF >> $CONFIG_FILE_PATH
 
