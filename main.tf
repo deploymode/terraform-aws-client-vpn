@@ -1,12 +1,12 @@
 locals {
-  vpn_config_path = "${path.root}/${var.config_dir}/client-config.ovpn"
+  vpn_config_path = "${path.root}/${var.config_dir}/${var.stage}-client-config.ovpn"
 }
 
 // Certs
 // Assume scripts/gen-certs.sh has been run
 resource aws_acm_certificate client {
-  private_key       = file("${path.root}/${var.cert_dir}/client1.${var.cert_domain}.key")
-  certificate_body  = file("${path.root}/${var.cert_dir}/client1.${var.cert_domain}.crt")
+  private_key       = file("${path.root}/${var.cert_dir}/${var.stage}.${var.cert_domain}.key")
+  certificate_body  = file("${path.root}/${var.cert_dir}/${var.stage}.${var.cert_domain}.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
@@ -60,8 +60,7 @@ resource aws_ec2_client_vpn_authorization_rule ingress-all {
 }
 
 resource aws_ec2_client_vpn_route internet-access {
-  count                  = var.enable_internet_access ? 1 : 0
-  for_each               = toset(var.subnet_ids)
+  for_each               = var.enable_internet_access ? toset(var.subnet_ids) : []
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   destination_cidr_block = "0.0.0.0/0"
   target_vpc_subnet_id   = aws_ec2_client_vpn_network_association.default[each.key].subnet_id
@@ -82,7 +81,7 @@ resource null_resource export-client-config {
 
 resource null_resource append-client-config-certs {
   provisioner local-exec {
-    command = "${path.module}/scripts/client-append-cert.sh ${path.root} ${var.cert_dir} ${var.config_dir} ${var.cert_domain}"
+    command = "${path.module}/scripts/client-append-cert.sh ${path.root} ${var.cert_dir} ${var.config_dir} ${var.cert_domain} ${var.stage}"
   }
 
   depends_on = [null_resource.export-client-config]
