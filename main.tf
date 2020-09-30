@@ -59,6 +59,14 @@ resource aws_ec2_client_vpn_authorization_rule ingress-all {
   description            = "Allow all VPN groups access to ${var.allowed_ingress_network_cidr}"
 }
 
+resource aws_ec2_client_vpn_route internet-access {
+  count                  = var.enable_internet_access ? 1 : 0
+  for_each               = toset(var.subnet_ids)
+  client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
+  destination_cidr_block = "0.0.0.0/0"
+  target_vpc_subnet_id   = aws_ec2_client_vpn_network_association.default[each.key].subnet_id
+}
+
 data "aws_region" "current" {}
 
 # 'Borrowed' from: https://github.com/achuchulev/terraform-aws-client-vpn-endpoint/blob/master/main.tf

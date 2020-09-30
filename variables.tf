@@ -22,6 +22,12 @@ variable "security_groups" {
   default     = null
 }
 
+variable "enable_internet_access" {
+  type        = bool
+  description = "If true, add a route to 0.0.0.0/0 on VPN endpoint route table. Your VPN subnet must also have a route to an Internet Gateway."
+  default     = false
+}
+
 // Authentication
 
 variable "cert_dir" {
