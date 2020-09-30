@@ -1,12 +1,12 @@
 locals {
-  vpn_config_path = "${path.root}/${var.config_dir}/${var.stage}-client-config.ovpn"
+  vpn_config_path = "${path.root}/${var.config_dir}/${module.this.stage}-client-config.ovpn"
 }
 
 // Certs
 // Assume scripts/gen-certs.sh has been run
 resource aws_acm_certificate client {
-  private_key       = file("${path.root}/${var.cert_dir}/${var.stage}.${var.cert_domain}.key")
-  certificate_body  = file("${path.root}/${var.cert_dir}/${var.stage}.${var.cert_domain}.crt")
+  private_key       = file("${path.root}/${var.cert_dir}/${module.this.stage}.${var.cert_domain}.key")
+  certificate_body  = file("${path.root}/${var.cert_dir}/${module.this.stage}.${var.cert_domain}.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
@@ -81,7 +81,7 @@ resource null_resource export-client-config {
 
 resource null_resource append-client-config-certs {
   provisioner local-exec {
-    command = "${path.module}/scripts/client-append-cert.sh ${path.root} ${var.cert_dir} ${var.config_dir} ${var.cert_domain} ${var.stage}"
+    command = "${path.module}/scripts/client-append-cert.sh ${path.root} ${var.cert_dir} ${var.config_dir} ${var.cert_domain} ${module.this.stage}"
   }
 
   depends_on = [null_resource.export-client-config]
