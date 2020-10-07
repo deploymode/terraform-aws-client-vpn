@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Based on https://github.com/achuchulev/terraform-aws-client-vpn-endpoint/blob/master/scripts/client_config_append_certs_path.sh
+
 MODULE_ROOT=$1
 CERT_DIR=$2
 CONFIG_DIR=$3
