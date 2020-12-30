@@ -71,7 +71,7 @@ Here's how to invoke this example module in your projects
 
 ```hcl
 module vpn {
-  source = "https://github.com/DeployMode/terraform-aws-client-vpn.git?ref=master"
+  source = "git::https://github.com/DeployMode/terraform-aws-client-vpn.git?ref=master"
 
   context = module.this.context
 
