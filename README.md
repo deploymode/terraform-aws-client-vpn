@@ -94,7 +94,7 @@ Here's how to invoke this example module in your projects
 
 ```hcl
 module vpn {
-  source = "https://github.com/deploymode/terraform-aws-client-vpn.git?ref=master"
+  source = "git::https://github.com/deploymode/terraform-aws-client-vpn.git?ref=master"
 
   context = module.this.context
 
@@ -319,7 +319,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyrights
 
-Copyright © 2020-2023 [DeployMode Pty Ltd](https://www.deploymode.com/)
+Copyright © 2020-2023-2023 [DeployMode Pty Ltd](https://www.deploymode.com/)
 
 
 

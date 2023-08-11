@@ -17,7 +17,7 @@ license: "APACHE2"
 copyrights:
   - name: "DeployMode Pty Ltd"
     url: "https://www.deploymode.com/"
-    year: "2020"
+    year: "2020-2023"
 
 # Canonical GitHub repo
 github_repo: deploymode/terraform-aws-client-vpn
@@ -64,7 +64,7 @@ usage: |-
 
   ```hcl
   module vpn {
-    source = "https://github.com/deploymode/terraform-aws-client-vpn.git?ref=master"
+    source = "git::https://github.com/deploymode/terraform-aws-client-vpn.git?ref=master"
 
     context = module.this.context
 
