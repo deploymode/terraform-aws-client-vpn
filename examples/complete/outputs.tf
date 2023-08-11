@@ -13,11 +13,6 @@ output "vpn_endpoint_dns_name" {
   value       = module.vpn.dns_name
 }
 
-output "vpn_endpoint_status" {
-  description = "The current state of the Client VPN endpoint."
-  value       = module.vpn.status
-}
-
 output "vpn_config_path" {
   description = "Path to downloaded VPN config file"
   value       = module.vpn.vpn_config_path

@@ -5,9 +5,16 @@ variable "vpn_client_cidr" {
   description = "Network CIDR for allocating IPs to VPN clients"
 }
 
+variable "vpc_id" {
+  type        = string
+  description = "VPC ID to associate clients. Must be supplied if subnet_ids is set."
+  default = null
+}
+
 variable "subnet_ids" {
   type        = list(string)
   description = "Subnet ID to associate clients"
+  default = []
 }
 
 variable "allowed_ingress_network_cidr" {

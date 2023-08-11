@@ -42,7 +42,8 @@ resource "aws_ec2_client_vpn_endpoint" "default" {
     cloudwatch_log_stream = aws_cloudwatch_log_stream.default.name
   }
 
-  security_group_ids = var.security_groups
+  vpc_id              = var.vpc_id
+  security_group_ids  = var.security_groups
 
   tags = module.this.tags
 }
