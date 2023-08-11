@@ -13,11 +13,6 @@ output "dns_name" {
   value       = aws_ec2_client_vpn_endpoint.default.dns_name
 }
 
-output "status" {
-  description = "The current state of the Client VPN endpoint."
-  value       = aws_ec2_client_vpn_endpoint.default.status
-}
-
 output "vpn_config_path" {
   description = "Path to downloaded VPN config file"
   value       = local.vpn_config_path

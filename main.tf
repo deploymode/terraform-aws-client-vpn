@@ -4,29 +4,29 @@ locals {
 
 // Certs
 // Assume scripts/gen-certs.sh has been run
-resource aws_acm_certificate client {
+resource "aws_acm_certificate" "client" {
   private_key       = file("${path.root}/${var.cert_dir}/${module.this.stage}.${var.cert_domain}.key")
   certificate_body  = file("${path.root}/${var.cert_dir}/${module.this.stage}.${var.cert_domain}.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
-resource aws_acm_certificate server {
+resource "aws_acm_certificate" "server" {
   private_key       = file("${path.root}/${var.cert_dir}/server.key")
   certificate_body  = file("${path.root}/${var.cert_dir}/server.crt")
   certificate_chain = file("${path.root}/${var.cert_dir}/ca.crt")
 }
 
-resource aws_cloudwatch_log_group default {
+resource "aws_cloudwatch_log_group" "default" {
   name              = format("/aws/vpn/%s/logs", module.this.id)
   retention_in_days = var.cloudwatch_log_retention_days
 }
 
-resource aws_cloudwatch_log_stream default {
+resource "aws_cloudwatch_log_stream" "default" {
   name           = module.this.id
   log_group_name = aws_cloudwatch_log_group.default.name
 }
 
-resource aws_ec2_client_vpn_endpoint default {
+resource "aws_ec2_client_vpn_endpoint" "default" {
   description            = module.this.id
   server_certificate_arn = aws_acm_certificate.server.arn
   client_cidr_block      = var.vpn_client_cidr
@@ -42,24 +42,25 @@ resource aws_ec2_client_vpn_endpoint default {
     cloudwatch_log_stream = aws_cloudwatch_log_stream.default.name
   }
 
+  security_group_ids = var.security_groups
+
   tags = module.this.tags
 }
 
-resource aws_ec2_client_vpn_network_association default {
+resource "aws_ec2_client_vpn_network_association" "default" {
   for_each               = toset(var.subnet_ids)
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   subnet_id              = each.key
-  security_groups        = var.security_groups
 }
 
-resource aws_ec2_client_vpn_authorization_rule ingress-all {
+resource "aws_ec2_client_vpn_authorization_rule" "ingress-all" {
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   target_network_cidr    = var.allowed_ingress_network_cidr
   authorize_all_groups   = true
   description            = "Allow all VPN groups access to ${var.allowed_ingress_network_cidr}"
 }
 
-resource aws_ec2_client_vpn_route internet-access {
+resource "aws_ec2_client_vpn_route" "internet-access" {
   for_each               = var.enable_internet_access ? toset(var.subnet_ids) : []
   client_vpn_endpoint_id = aws_ec2_client_vpn_endpoint.default.id
   destination_cidr_block = "0.0.0.0/0"
@@ -69,8 +70,8 @@ resource aws_ec2_client_vpn_route internet-access {
 data "aws_region" "current" {}
 
 # 'Borrowed' from: https://github.com/achuchulev/terraform-aws-client-vpn-endpoint/blob/master/main.tf
-resource null_resource export-client-config {
-  provisioner local-exec {
+resource "null_resource" "export-client-config" {
+  provisioner "local-exec" {
     command = "mkdir -p ${var.config_dir} && aws --region ${data.aws_region.current.name} ec2 export-client-vpn-client-configuration --client-vpn-endpoint-id ${aws_ec2_client_vpn_endpoint.default.id} --output text > ${local.vpn_config_path}"
   }
 
@@ -79,8 +80,8 @@ resource null_resource export-client-config {
   ]
 }
 
-resource null_resource append-client-config-certs {
-  provisioner local-exec {
+resource "null_resource" "append-client-config-certs" {
+  provisioner "local-exec" {
     command = "${path.module}/scripts/client-append-cert.sh ${path.root} ${var.cert_dir} ${var.config_dir} ${var.cert_domain} ${module.this.stage}"
   }
 
