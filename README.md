@@ -319,7 +319,7 @@ In general, PRs are welcome. We follow the typical "fork-and-pull" Git workflow.
 
 ## Copyrights
 
-Copyright © 2020-2023-2023 [DeployMode Pty Ltd](https://www.deploymode.com/)
+Copyright © 2020-2023 [Original Mind Pty Ltd](https://www.deploymode.com/)
 
 
 
